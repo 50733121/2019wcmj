@@ -39,7 +39,7 @@ function myFunction(){
 }
 // ]]></script>
 <p><iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="691" src="https://www.youtube.com/embed/FXoxbXuQ3G8" width="1106"></iframe></p><h1>50733121期末報告</h1>
-<p><span>50733121 近端配置管理</span><br/><span>windows network setting</span><br/><br/><span>chrome proxy</span><br/><br/><span>firefox proxy</span><br/><br/><span>mde.tw</span><br/><br/><span>github.com</span><br/><br/><span>portable programming system</span><br/><br/><span>portablegit - remove helper = manager</span><br/><br/><span>login github add repository - README.md</span><br/><br/><span>git clone self-repo and CMSimfly</span><br/><br/><span>y:\home\.gitconfig</span><br/><br/><span>git config --global user.name"50733121"</span><br/><br/><span>git config --global user.email"50733121@gm.nfu.edu.tw"</span><br/><br/><span>git config --global http.proxy </span><a data-lynx-mode="hover" data-lynx-uri="https://l.facebook.com/l.php?u=http%3A%2F%2F140.130.17.3%3A3128%2F%3Ffbclid%3DIwAR2XxH_f2YV-lPrsPhjr6aLwG7N1DD6BOT3X69vCRQS3VS1eD8Ow_iZpjwU&amp;h=AT2gfd2Si3QHIQ41E_U0pIVhMOwq2PIwu-g2kz1wQPyXVkxPbSlg0IC2DlaUAxfCEt7GQxgV0qJmqL7CsWVwSoD32nKBJpZMwTilXib6KDXsLrHijESNSZnxufA42K5aV7vLIN-zaByL_-7SSMlXvw" href="http://140.130.17.3:3128/?fbclid=IwAR2XxH_f2YV-lPrsPhjr6aLwG7N1DD6BOT3X69vCRQS3VS1eD8Ow_iZpjwU" rel="nofollow noopener" target="_blank">http://140.130.17.4:3128</a><br/><br/><span>git add .</span><br/><br/><span>git commit -m"commit description"</span><br/><br/><span>git push Github Pages - setting,url</span><br/><br/><span>local python wsgi.py</span></p><h1>遊戲</h1>
+<p><span>50733121 近端配置管理</span><br/><span>windows network setting</span><br/><br/><span>chrome proxy</span><br/><br/><span>firefox proxy</span><br/><br/><span>mde.tw</span><br/><br/><span>github.com</span><br/><br/><span>portable programming system</span><br/><br/><span>portablegit - remove helper = manager</span><br/><br/><span>login github add repository - README.md</span><br/><br/><span>git clone self-repo and CMSimfly</span><br/><br/><span>y:\home\.gitconfig</span><br/><br/><span>git config --global user.name"50733121"</span><br/><br/><span>git config --global user.email"50733121@gm.nfu.edu.tw"</span><br/><br/><span>git config --global http.proxy </span><a data-lynx-mode="hover" data-lynx-uri="https://l.facebook.com/l.php?u=http%3A%2F%2F140.130.17.3%3A3128%2F%3Ffbclid%3DIwAR2XxH_f2YV-lPrsPhjr6aLwG7N1DD6BOT3X69vCRQS3VS1eD8Ow_iZpjwU&amp;h=AT2gfd2Si3QHIQ41E_U0pIVhMOwq2PIwu-g2kz1wQPyXVkxPbSlg0IC2DlaUAxfCEt7GQxgV0qJmqL7CsWVwSoD32nKBJpZMwTilXib6KDXsLrHijESNSZnxufA42K5aV7vLIN-zaByL_-7SSMlXvw" href="http://140.130.17.3:3128/?fbclid=IwAR2XxH_f2YV-lPrsPhjr6aLwG7N1DD6BOT3X69vCRQS3VS1eD8Ow_iZpjwU" rel="nofollow noopener" target="_blank">http://140.130.17.4:3128</a><br/><br/><span>git add .</span><br/><br/><span>git commit -m"commit description"</span><br/><br/><span>git push Github Pages - setting,url</span><br/><br/><span>local python wsgi.py</span></p><h1>骰子</h1>
 <script type="text/javascript">// <![CDATA[
 var cwidth = 400;
     var cheight = 300;
@@ -193,3 +193,134 @@ function draw2mid() {
 // ]]></script>
 <p><canvas height="300" id="canvas" width="400"> Your browser doesn't support the HTML5 element canvas. </canvas> <br/> <button onclick="throwdice();">Throw dice </button></p>
 <form id="f" name="f">Stage: <input name="stage" type="text" value="First Throw"/> Point: <input name="pv" type="text" value="   "/> Outcome: <input name="outcome" type="text" value="     "/></form>
+<h1>ROC Flag</h1>
+<!-- 導入 Brython 標準程式庫 -->
+<script src="/static/brython.js"></script>
+<script src="/static/brython_stdlib.js"></script>
+<p></p>
+<!-- 啟動 Brython -->
+<script>
+window.onload=function(){
+// 設定 data/py 為共用程式路徑
+brython({debug:1, pythonpath:['./../data/py']});
+}
+</script>
+<p><canvas height="400" id="plotarea" width="600"></canvas></p>
+<script type="text/python">
+# 導入 doc
+from browser import document as doc
+import math
+
+# 準備繪圖畫布
+canvas = doc["plotarea"]
+ctx = canvas.getContext("2d")
+# 進行座標轉換, x 軸不變, y 軸反向且移動 canvas.height 單位光點
+# ctx.setTransform(1, 0, 0, -1, 0, canvas.height)
+# 以下採用 canvas 原始座標繪圖
+flag_w = canvas.width
+flag_h = canvas.height
+circle_x = flag_w/4
+circle_y = flag_h/4
+# 先畫滿地紅
+ctx.fillStyle='rgb(255, 0, 0)'
+ctx.fillRect(0,0,flag_w,flag_h)
+# 再畫青天
+ctx.fillStyle='rgb(0, 0, 150)'
+ctx.fillRect(0,0,flag_w/2,flag_h/2)
+# 畫十二道光芒白日
+ctx.beginPath()
+star_radius = flag_w/8
+angle = 0
+for i in range(24):
+    angle += 5*math.pi*2/12
+    toX = circle_x + math.cos(angle)*star_radius
+    toY = circle_y + math.sin(angle)*star_radius
+    # 只有 i 為 0 時移動到 toX, toY, 其餘都進行 lineTo
+    if (i):
+        ctx.lineTo(toX, toY)
+    else:
+        ctx.moveTo(toX, toY)
+ctx.closePath()
+# 將填色設為白色
+ctx.fillStyle = '#fff'
+ctx.fill()
+# 白日:藍圈
+ctx.beginPath()
+ctx.arc(circle_x, circle_y, flag_w*17/240, 0, math.pi*2, True)
+ctx.closePath()
+# 填色設為藍色
+ctx.fillStyle = 'rgb(0, 0, 149)'
+ctx.fill()
+# 白日:白心
+ctx.beginPath()
+ctx.arc(circle_x, circle_y, flag_w/16, 0, math.pi*2, True)
+ctx.closePath()
+# 填色設為白色
+ctx.fillStyle = '#fff'
+ctx.fill()
+</script>
+<!-- 導入 Brython 標準程式庫 -->
+<script src="/static/brython.js"></script>
+<script src="/static/brython_stdlib.js"></script>
+<p></p>
+<!-- 啟動 Brython -->
+<script>
+window.onload=function(){
+// 設定 data/py 為共用程式路徑
+brython({debug:1, pythonpath:['./../data/py']});
+}
+</script>
+<p><canvas height="400" id="plotarea2" width="600"></canvas></p>
+<script type="text/python">
+# 導入 doc
+from browser import document as doc
+import math
+
+# 準備繪圖畫布
+canvas = doc["plotarea2"]
+ctx = canvas.getContext("2d")
+# 進行座標轉換, x 軸不變, y 軸反向且移動 canvas.height 單位光點
+# ctx.setTransform(1, 0, 0, -1, 0, canvas.height)
+# 以下採用 canvas 原始座標繪圖
+flag_w = canvas.width
+flag_h = canvas.height
+circle_x = flag_w/4
+circle_y = flag_h/4
+# 先畫滿地紅
+ctx.fillStyle='rgb(100, 0, 0)'
+ctx.fillRect(0,0,flag_w,flag_h)
+# 再畫青天
+ctx.fillStyle='rgb(0, 0, 150)'
+ctx.fillRect(0,0,flag_w/2,flag_h/2)
+# 畫十二道光芒白日
+ctx.beginPath()
+star_radius = flag_w/8
+angle = 0
+for i in range(24):
+    angle += 5*math.pi*2/12
+    toX = circle_x + math.cos(angle)*star_radius
+    toY = circle_y + math.sin(angle)*star_radius
+    # 只有 i 為 0 時移動到 toX, toY, 其餘都進行 lineTo
+    if (i):
+        ctx.lineTo(toX, toY)
+    else:
+        ctx.moveTo(toX, toY)
+ctx.closePath()
+# 將填色設為白色
+ctx.fillStyle = '#fff'
+ctx.fill()
+# 白日:藍圈
+ctx.beginPath()
+ctx.arc(circle_x, circle_y, flag_w*17/240, 0, math.pi*2, True)
+ctx.closePath()
+# 填色設為藍色
+ctx.fillStyle = 'rgb(0, 0, 149)'
+ctx.fill()
+# 白日:白心
+ctx.beginPath()
+ctx.arc(circle_x, circle_y, flag_w/16, 0, math.pi*2, True)
+ctx.closePath()
+# 填色設為白色
+ctx.fillStyle = '#fff'
+ctx.fill()
+</script>
